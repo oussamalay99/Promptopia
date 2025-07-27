@@ -16,9 +16,11 @@
   justify-content: center;
   padding: 120px 24px 160px 24px;
   pointer-events: none;
+  /* background: #7e7ecc;
+  background: radial-gradient(circle,rgb(200, 200, 200) 0%, rgba(180, 180, 180, 1) 25%, rgba(160, 160, 160, 1) 50%, rgba(120, 120, 120, 1) 75%, rgba(100, 100, 100, 1) 100%); */
 }
 
-.main:before {
+/* .main:before {
   background: radial-gradient(circle, rgba(2, 0, 36, 0) 0, #fafafa 100%);
   position: absolute;
   content: "";
@@ -26,19 +28,16 @@
   width: 100%;
   height: 100%;
   top: 0;
-}
+} */
 
-.main:after {
+/* .main {
   content: "";
-  background-image: url("/assets/images/grid.svg");
   z-index: 1;
   position: absolute;
   width: 100%;
   height: 100%;
   top: 0;
-  opacity: 0.4;
-  filter: invert(1);
-}
+} */
 
 .gradient {
   height: fit-content;
@@ -81,20 +80,30 @@
   @apply rounded-full border border-black bg-black py-1.5 px-5 text-white transition-all hover:bg-white hover:text-black text-center text-sm font-inter flex items-center justify-center;
 }
 
+.black_btn_dark {
+  @apply rounded-full border border-white bg-white py-1.5 px-5 text-black transition-all hover:bg-black hover:text-white text-center text-sm font-inter flex items-center justify-center;
+}
+
 .outline_btn {
   @apply rounded-full border border-black bg-transparent py-1.5 px-5 text-black transition-all hover:bg-black hover:text-white text-center text-sm font-inter flex items-center justify-center;
+}
+.outline_btn_dark {
+  @apply rounded-full border border-white bg-transparent py-1.5 px-5 text-white transition-all hover:bg-white hover:text-black text-center text-sm font-inter flex items-center justify-center;
 }
 
 .head_text {
   @apply mt-5 text-5xl font-extrabold leading-[1.15] text-black sm:text-6xl;
 }
 
-.orange_gradient {
-  @apply bg-gradient-to-r from-amber-500 via-orange-600 to-yellow-500 bg-clip-text text-transparent;
+.delete_button {
+  @apply bg-red-500 bg-clip-text text-transparent font-bold;
+}
+.gray_gradient {
+  @apply bg-gradient-to-r from-blue-500 via-blue-700 to-blue-400 bg-clip-text text-transparent;
 }
 
-.green_gradient {
-  @apply bg-gradient-to-r from-green-400 to-green-500 bg-clip-text text-transparent;
+.edit_button {
+  @apply bg-indigo-500 bg-clip-text text-transparent font-bold;
 }
 
 .blue_gradient {
@@ -106,7 +115,11 @@
 }
 
 .search_input {
-  @apply block w-full rounded-md border border-gray-200 bg-white py-2.5 font-satoshi pl-5 pr-12 text-sm shadow-lg font-medium focus:border-black focus:outline-none focus:ring-0;
+  @apply block w-full rounded-md border border-gray-300 dark:border-gray-600 
+    bg-white dark:bg-neutral-900 text-black dark:text-white 
+    py-2.5 font-satoshi pl-5 pr-12 text-sm shadow-lg font-medium 
+    focus:border-black dark:focus:border-white focus:outline-none focus:ring-0 
+    placeholder-gray-500 dark:placeholder-gray-400;
 }
 
 .copy_btn {

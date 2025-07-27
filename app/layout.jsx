@@ -1,6 +1,7 @@
 import "@styles/globals.css";
 import Nav from "@components/Nav";
 import Provider from "@components/Provider";
+import ThemeSwitcher from "@components/ThemeSwitcher";
 
 export const metadata = {
   title: "promptopia",
@@ -12,12 +13,13 @@ const RootLayout = ({ children }) => {
     <html lang="en">
       <body>
         <Provider>
-          <div className="main">
+          <div className="main min-h-screen bg-gradient-to-br from-white via-gray-100 to-gray-200 text-black dark:from-neutral-900 dark:via-neutral-950 dark:to-black dark:text-white">
             <div className="gradient" />
           </div>
   
           <main className="app">
             <Nav />
+            <ThemeSwitcher />
             {children}
           </main>
         </Provider>

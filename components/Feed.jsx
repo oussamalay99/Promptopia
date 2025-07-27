@@ -6,7 +6,7 @@ import { handleClientScriptLoad } from "@node_modules/next/script";
 
 const PromptCardList = ({ data, handleTagClick }) => {
   return (
-    <div className='mt-16 prompt_layout'>
+    <div className="mt-16 prompt_layout">
       {data.map((post) => (
         <PromptCard
           key={post._id}
@@ -19,18 +19,35 @@ const PromptCardList = ({ data, handleTagClick }) => {
 };
 const Feed = () => {
   const [searchText, setSearchText] = useState("");
+  const [searchResults, setSearchResults] = useState("");
   const [posts, setPosts] = useState([]);
-  const handleSearchChange = (e) => {};
+  const handleSearchChange = (e) => {
+    e.preventDefault();
+    setSearchText(e.target.value);
+
+    const searchResult = filterPrompts(e.target.value);
+    setSearchResults(searchResult);
+  };
   useEffect(() => {
     const fetchPosts = async () => {
-      const response = await fetch('/api/prompt');
+      const response = await fetch("/api/prompt");
       const data = await response.json();
       // console.log(data)
       setPosts(data);
-    }
+    };
     fetchPosts();
-  }, [])
-  
+  }, []);
+
+  const filterPrompts = (searchtext) => {
+    const regex = new RegExp(searchText, "i");
+    return posts.filter(
+      (item) =>
+        regex.test(item.creator.username) ||
+        regex.test(item.tag) ||
+        regex.test(item.prompt)
+    );
+  };
+
   return (
     <section className="feed">
       <form className="relative w-full flex-center">
@@ -43,9 +60,13 @@ const Feed = () => {
           className="search_input peer"
         />
       </form>
-      {
-      console.log(posts)}
-      <PromptCardList data={posts} handleTagClick={() => {}} />
+      {/* {
+      console.log(posts)} */}
+      {searchText ? (
+        <PromptCardList data={searchResults} handleTagClick={() => {}} />
+      ) : (
+        <PromptCardList data={posts} handleTagClick={() => {}} />
+      )}
     </section>
   );
 };
