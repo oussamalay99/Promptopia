@@ -17,7 +17,7 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
     setTimeout(() => setCopied(""), 3000);
   };
   return (
-    <div className="prompt_card dark:bg-white/5">
+    <div className="prompt_card">
       <div className="flex justify-between items-start gap-5">
         <div className="flex-1 flex justify-start items-center gap-3 cursor-pointer">
           <Image
@@ -34,7 +34,7 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
           </div>
         </div>
 
-        <div className="copy_btn dark:bg-white" onClick={handleCopy}>
+        <div className="copy_btn" onClick={handleCopy}>
           <Image
             src={
               copied === post.prompt

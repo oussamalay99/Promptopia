@@ -14,7 +14,7 @@ const Form = ({ type, post, setPost, submitting, handleSubmit }) => {
 
       <form
         onSubmit={handleSubmit}
-        className="mt-10 w-full max-w-2xl flex flex-col gap-7 glassmorphism dark:border-gray-700 dark:bg-white/5 dark:shadow-none dark:backdrop-blur-none"
+        className="mt-10 w-full max-w-2xl flex flex-col gap-7 glassmorphism"
       >
         <label>
           <span className="font-satoshi font-semibold text-base text-gray-700 dark:text-gray-200">
@@ -26,7 +26,7 @@ const Form = ({ type, post, setPost, submitting, handleSubmit }) => {
             onChange={(e) => setPost({ ...post, prompt: e.target.value })}
             placeholder="Write your prompt here..."
             required
-            className="form_textarea dark:text-gray-100"
+            className="form_textarea"
           />
         </label>
         <label>

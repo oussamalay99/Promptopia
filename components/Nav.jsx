@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 
 const Nav = () => {
-  const {data: session} = useSession();
+  const { data: session } = useSession();
   const [providers, setProviders] = useState(null);
   const [toggleDropdown, setToggleDropdown] = useState(false);
   useEffect(() => {
@@ -26,18 +26,22 @@ const Nav = () => {
           height={30}
           className="object-contain rounded-full dark:bg-white"
         />
-        <p className="logo_text dark:text-white">Promptopia</p>
+        <p className="logo_text">Promptopia</p>
       </Link>
-      
+
       {/* Desktop Navigation */}
       <div className="sm:flex hidden">
         {session?.user ? (
           <div className="flex gap-3 md:gap-5">
-            <Link href="/create-prompt" className="black_btn dark:bg-white dark:text-black dark:border-white dark:hover:bg-black dark:hover:text-white">
+            <Link href="/create-prompt" className="black_btn">
               Create Prompt
             </Link>
 
-            <button type="button" onClick={signOut} className="outline_btn dark:bg-black dark:text-white dark:border-white dark:hover:bg-white dark:hover:text-black ">
+            <button
+              type="button"
+              onClick={signOut}
+              className="outline_btn"
+            >
               Sign Out
             </button>
             <Link href="/profile">
@@ -80,29 +84,29 @@ const Nav = () => {
               onClick={() => setToggleDropdown((prev) => !prev)}
             />
             {toggleDropdown && (
-              <div className="dropdown dark:bg-gray-950">
+              <div className="dropdown">
                 <Link
                   href="/profile"
-                  className="dropdown_link dark:text-gray-200 dark:hover:text-gray-500"
+                  className="dropdown_link"
                   onClick={() => setToggleDropdown(false)}
                 >
                   My Profile
                 </Link>
-                
+
                 <Link
                   href="/create-prompt"
-                  className="dropdown_link dark:text-gray-200 dark:hover:text-gray-500"
+                  className="dropdown_link"
                   onClick={() => setToggleDropdown(false)}
                 >
                   Create Prompt
                 </Link>
                 <button
-                 type="button"
-                 onClick={() => {
-                  setToggleDropdown(false);
-                  signOut();
-                 }}
-                 className="mt-5 w-full black_btn dark:bg-white dark:text-black dark:border-white dark:hover:bg-black dark:hover:text-white"
+                  type="button"
+                  onClick={() => {
+                    setToggleDropdown(false);
+                    signOut();
+                  }}
+                  className="mt-5 w-full black_btn"
                 >
                   Sign Out
                 </button>
@@ -111,7 +115,7 @@ const Nav = () => {
           </div>
         ) : (
           <>
-          {/* {alert(providers)} */}
+            {/* {alert(providers)} */}
             {providers &&
               Object.values(providers).map((provider) => (
                 <button
