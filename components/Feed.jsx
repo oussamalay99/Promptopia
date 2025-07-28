@@ -40,12 +40,28 @@ const Feed = () => {
 
   const filterPrompts = (searchtext) => {
     const regex = new RegExp(searchText, "i");
-    return posts.filter(
+    const filtered = posts.filter(
       (item) =>
         regex.test(item.creator.username) ||
         regex.test(item.tag) ||
         regex.test(item.prompt)
     );
+    // console.log("FILTERED RESULT:", filtered);
+    return filtered;
+  };
+
+  useEffect(() => {
+    if (searchText) {
+      const newResults = filterPrompts(searchText);
+      setSearchResults(newResults);
+    }
+  }, [searchText]);
+
+  const handleTagClick = (tagName) => {
+    setSearchText(tagName);
+
+    // const newResults = filterPrompts(tagName);
+    // setSearchResults(newResults);
   };
 
   return (
@@ -63,9 +79,9 @@ const Feed = () => {
       {/* {
       console.log(posts)} */}
       {searchText ? (
-        <PromptCardList data={searchResults} handleTagClick={() => {}} />
+        <PromptCardList data={searchResults} handleTagClick={handleTagClick} />
       ) : (
-        <PromptCardList data={posts} handleTagClick={() => {}} />
+        <PromptCardList data={posts} handleTagClick={handleTagClick} />
       )}
     </section>
   );

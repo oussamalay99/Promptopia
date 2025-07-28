@@ -6,7 +6,7 @@ import { useSession } from "next-auth/react";
 import { usePathname, useRouter } from "next/navigation";
 
 const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
-  const {data: session} = useSession();
+  const { data: session } = useSession();
   const pathname = usePathname();
   const router = useRouter();
 
@@ -48,13 +48,28 @@ const PromptCard = ({ post, handleTagClick, handleEdit, handleDelete }) => {
         </div>
       </div>
 
-      <p className="my-4 font-satoshi text-sm text-gray-700 dark:text-gray-400">{post.prompt}</p>
-      <p
+      <p className="my-4 font-satoshi text-sm text-gray-700 dark:text-gray-400">
+        {post.prompt}
+      </p>
+      {/* <p
         className="font-inter text-sm blue_gradient cursor-pointer dark:text-blue-400"
         onClick={() => handleTagClick && handleTagClick(post.tag)}
       >
         #{post.tag}
-      </p>
+      </p> */}
+      <div className="flex flex-wrap gap-2 mt-2">
+        {/* {console.log("TAG VALUE TYPE:", typeof post.tag, post.tag)} */}
+        
+        {post.tag.split(",").map((tag, index) => (
+          <span
+            key={index}
+            className="font-inter text-sm blue_gradient cursor-pointer dark:text-blue-400"
+            onClick={() => handleTagClick && handleTagClick(tag.trim())}
+          >
+            #{tag.trim()}
+          </span>
+        ))}
+      </div>
       {session?.user.id === post.creator._id && pathname === "/profile" && (
         <div className="mt-5 flex-center gap-4 border-t border-gray-100 pt-3">
           <p

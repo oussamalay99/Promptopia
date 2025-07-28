@@ -31,20 +31,62 @@ const Form = ({ type, post, setPost, submitting, handleSubmit }) => {
         </label>
         <label>
           <span className="font-satoshi font-semibold text-base text-gray-700 dark:text-gray-200">
-            Tag{" "}
-            <span className="font-normal">
-              {" "}
-              (#product, #webdevelopment, #idea)
-            </span>
+            Tags <span className="font-normal">(press Enter to add)</span>
           </span>
 
           <input
-            value={post.tag}
-            onChange={(e) => setPost({ ...post, tag: e.target.value })}
+            value={post.currentTag || ""}
+            onChange={(e) => setPost({ ...post, currentTag: e.target.value })}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" && post.currentTag?.trim()) {
+                e.preventDefault();
+                const tagArray = post.tag
+                  ? post.tag.split(",").map((t) => t.trim())
+                  : [];
+                const newTag = post.currentTag.trim();
+
+                if (!tagArray.includes(newTag)) {
+                  tagArray.push(newTag);
+                  setPost({
+                    ...post,
+                    tag: tagArray.join(","),
+                    currentTag: "",
+                  });
+                }
+              }
+            }}
             placeholder="#tag"
-            required
             className="form_input"
           />
+
+          <div className="mt-2 flex flex-wrap gap-2">
+            {(typeof post.tag === "string" ? post.tag.split(",") : []).map(
+              (t, idx) => (
+                <span
+                  key={idx}
+                  className="bg-blue-100 text-blue-800 text-sm px-3 py-1 rounded-full flex items-center gap-2 dark:bg-blue-900 dark:text-blue-200"
+                >
+                  #{t.trim()}
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const newTags =
+                        typeof post.tag === "string"
+                          ? post.tag
+                              .split(",")
+                              .filter((_, i) => i !== idx)
+                              .join(",")
+                          : "";
+                      setPost({ ...post, tag: newTags });
+                    }}
+                    className="text-red-500 font-bold ml-1"
+                  >
+                    ×
+                  </button>
+                </span>
+              )
+            )}
+          </div>
         </label>
 
         <div className="flex-end mx-3 mb-5 gap-4">
@@ -52,7 +94,11 @@ const Form = ({ type, post, setPost, submitting, handleSubmit }) => {
             Cancel
           </Link>
 
-          <button type="submit" disabled={submitting} className="px-5 py-1.5 text-sm bg-blue-700 rounded-full text-white">
+          <button
+            type="submit"
+            disabled={submitting}
+            className="px-5 py-1.5 text-sm bg-blue-700 rounded-full text-white"
+          >
             {submitting ? `${type}...` : type}
           </button>
         </div>
