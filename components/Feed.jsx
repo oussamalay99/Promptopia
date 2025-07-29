@@ -7,6 +7,7 @@ import { handleClientScriptLoad } from "@node_modules/next/script";
 const PromptCardList = ({ data, handleTagClick }) => {
   return (
     <div className="mt-16 prompt_layout">
+      {/* {console.log(data)} */}
       {data.map((post) => (
         <PromptCard
           key={post._id}
@@ -18,16 +19,11 @@ const PromptCardList = ({ data, handleTagClick }) => {
   );
 };
 const Feed = () => {
-  const [searchText, setSearchText] = useState("");
-  const [searchResults, setSearchResults] = useState("");
+   const [searchText, setSearchText] = useState("");
+  const [searchTimeout, setSearchTimeout] = useState(null);
+  const [searchedResults, setSearchedResults] = useState([]);
   const [posts, setPosts] = useState([]);
-  const handleSearchChange = (e) => {
-    e.preventDefault();
-    setSearchText(e.target.value);
 
-    const searchResult = filterPrompts(e.target.value);
-    setSearchResults(searchResult);
-  };
   useEffect(() => {
     const fetchPosts = async () => {
       const response = await fetch("/api/prompt");
@@ -51,17 +47,30 @@ const Feed = () => {
   };
 
   useEffect(() => {
-    if (searchText) {
-      const newResults = filterPrompts(searchText);
-      setSearchResults(newResults);
-    }
-  }, [searchText]);
+    const newResults = filterPrompts(searchText);
+    setSearchedResults(newResults);
+  }, [searchText])
+  
+
+
+  const handleSearchChange = (e) => {
+    clearTimeout(searchTimeout);
+    setSearchText(e.target.value);
+
+    // debounce method
+    setSearchTimeout(
+      setTimeout(() => {
+        const searchResult = filterPrompts(e.target.value);
+        setSearchedResults(searchResult);
+      }, 500)
+    );
+  };
 
   const handleTagClick = (tagName) => {
     setSearchText(tagName);
 
-    // const newResults = filterPrompts(tagName);
-    // setSearchResults(newResults);
+    // const searchResult = filterPrompts(tagName);
+    // setSearchedResults(searchResult);
   };
 
   return (
@@ -79,7 +88,7 @@ const Feed = () => {
       {/* {
       console.log(posts)} */}
       {searchText ? (
-        <PromptCardList data={searchResults} handleTagClick={handleTagClick} />
+        <PromptCardList data={searchedResults} handleTagClick={handleTagClick} />
       ) : (
         <PromptCardList data={posts} handleTagClick={handleTagClick} />
       )}
