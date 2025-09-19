@@ -6,6 +6,9 @@ import ThemeSwitcher from "@components/ThemeSwitcher";
 export const metadata = {
   title: "promptopia",
   description: "Discover & Share AI Prompts",
+  icons: {
+    icon: "/assets/icons/favicon.svg", 
+  },
 };
 
 const RootLayout = ({ children }) => {
@@ -16,7 +19,7 @@ const RootLayout = ({ children }) => {
           <div className="main min-h-screen bg-gradient-to-br from-white via-gray-100 to-gray-200 text-black dark:from-neutral-900 dark:via-neutral-950 dark:to-black dark:text-white">
             <div className="gradient" />
           </div>
-  
+
           <main className="app">
             <Nav />
             <ThemeSwitcher />

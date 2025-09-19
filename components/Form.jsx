@@ -40,7 +40,7 @@ const Form = ({ type, post, setPost, submitting, handleSubmit }) => {
             onKeyDown={(e) => {
               if (e.key === "Enter" && post.currentTag?.trim()) {
                 e.preventDefault();
-                const tagArray = post.tag
+                const tagArray = post.tag.length > 0
                   ? post.tag.split(",").map((t) => t.trim())
                   : [];
                 const newTag = post.currentTag.trim();
@@ -58,9 +58,8 @@ const Form = ({ type, post, setPost, submitting, handleSubmit }) => {
             placeholder="#tag"
             className="form_input"
           />
-
           <div className="mt-2 flex flex-wrap gap-2">
-            {(typeof post.tag === "string" ? post.tag.split(",") : []).map(
+            {((typeof post.tag === "string" && post.tag.length !=0) ? post.tag.split(",") : []).map(
               (t, idx) => (
                 <span
                   key={idx}
